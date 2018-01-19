@@ -5,9 +5,14 @@ import tensorflow as tf
 # colour map
 label_colours = [(0,0,0)
                 # 0=background
-                ,(255,0,0)
-                # 1=a
-                ]
+                ,(128,0,0),(0,128,0),(128,128,0),(0,0,128),(128,0,128)
+                # 1=aeroplane, 2=bicycle, 3=bird, 4=boat, 5=bottle
+                ,(0,128,128),(128,128,128),(64,0,0),(192,0,0),(64,128,0)
+                # 6=bus, 7=car, 8=cat, 9=chair, 10=cow
+                ,(192,128,0),(64,0,128),(192,0,128),(64,128,128),(192,128,128)
+                # 11=diningtable, 12=dog, 13=horse, 14=motorbike, 15=person
+                ,(0,64,0),(128,64,0),(0,192,0),(128,192,0),(0,64,128)]
+                # 16=potted plant, 17=sheep, 18=sofa, 19=train, 20=tv/monitor
 
 def decode_labels(mask, num_images=1, num_classes=21):
     """Decode batch of segmentation masks.
@@ -35,13 +40,11 @@ def decode_labels(mask, num_images=1, num_classes=21):
 
 def prepare_label(input_batch, new_size, num_classes, one_hot=True):
     """Resize masks and perform one-hot encoding.
-
     Args:
       input_batch: input tensor of shape [batch_size H W 1].
       new_size: a tensor with new height and width.
       num_classes: number of classes to predict (including background).
       one_hot: whether perform one-hot encoding.
-
     Returns:
       Outputs a tensor of shape [batch_size h w 21]
       with last dimension comprised of 0's and 1's only.
